@@ -21,7 +21,7 @@ export default function LoginForm() {
 	});
 
 	return (
-		<div className="absolute w-full h-full flex justify-center items-center">
+		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-full flex justify-center items-center">
 			<Card className="mx-auto max-w-sm ">
 				<CardHeader>
 					<CardTitle className="text-xl">Sign Up</CardTitle>

@@ -15,10 +15,8 @@ export const description =
 	"A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account.";
 
 export default function LoginForm() {
-
-
 	return (
-		<div className="absolute w-full h-5/6 flex justify-center items-center">
+		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-5/6 flex justify-center items-center">
 			<Card className="mx-auto max-w-sm">
 				<CardHeader>
 					<CardTitle className="text-2xl">Login</CardTitle>
