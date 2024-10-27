@@ -89,7 +89,7 @@ export default function Header() {
 							<SheetDescription>{""}</SheetDescription>
 						</SheetHeader>
 
-						<nav className="grid gap-4 text-lg font-medium">
+						<nav className="grid gap-4 text-lg font-medium justify-center">
 							<Link
 								to="#"
 								className="flex items-center gap-2 text-lg font-extrabold "
