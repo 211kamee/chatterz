@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+	Sheet,
+	SheetContent,
+	SheetTrigger,
+	SheetDescription,
+	SheetHeader,
+	SheetTitle,
+} from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-
-export const description =
-	"A settings page. The settings page has a sidebar navigation and a main content area. The main content area has a form to update the store name and a form to update the plugins directory. The sidebar navigation has links to general, security, integrations, support, organizations, and advanced settings.";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function Header() {
 	const [theme, setTheme] = useState("Light");
@@ -41,7 +46,9 @@ export default function Header() {
 						Contacts
 					</Link>
 
-					<Label htmlFor="theme">{theme[0].toLocaleUpperCase()+theme.slice(1)}</Label>
+					<Label htmlFor="theme">
+						{theme[0].toLocaleUpperCase() + theme.slice(1)}
+					</Label>
 					<Switch
 						id="theme"
 						className=""
@@ -75,6 +82,13 @@ export default function Header() {
 						</Button>
 					</SheetTrigger>
 					<SheetContent side="top">
+						<SheetHeader>
+							<VisuallyHidden.Root>
+								<SheetTitle>Nav Content</SheetTitle>
+							</VisuallyHidden.Root>
+							<SheetDescription>{""}</SheetDescription>
+						</SheetHeader>
+
 						<nav className="grid gap-4 text-lg font-medium">
 							<Link
 								to="#"
@@ -102,11 +116,29 @@ export default function Header() {
 								Contacts
 							</Link>
 							<div className="flex items-center">
-								<Label htmlFor="theme">{theme}</Label>
+								<Label htmlFor="theme">
+									{theme[0].toLocaleUpperCase() +
+										theme.slice(1)}
+								</Label>
 								<Switch
 									id="theme"
 									className="mx-4"
-									onClick={() => {}}
+									onClick={() => {
+										if (theme === "dark") {
+											document
+												.querySelector("html")
+												?.setAttribute("class", theme);
+											setTheme("light");
+										} else {
+											document
+												.querySelector("html")
+												?.setAttribute(
+													"class",
+													`mx-4 ${theme}`
+												);
+											setTheme("dark");
+										}
+									}}
 								/>
 							</div>
 						</nav>
