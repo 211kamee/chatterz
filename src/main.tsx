@@ -11,7 +11,7 @@ import Register from "./pages/auth/SignUp.tsx";
 
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		// Self Note: Add basename to use directory as root [ '/docs' as '/']
+		{/* Self Note: Add basename to use directory as root [ '/docs' as '/'] */}
 		<BrowserRouter basename="">
 			<Routes>
 				<Route path="/" Component={Header}>
