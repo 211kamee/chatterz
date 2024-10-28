@@ -1,18 +1,23 @@
-import { Link } from "react-router-dom";
-import { Button } from "./components/ui/button";
+import { Route, Routes } from "react-router-dom";
+import Header from "./pages/Header.tsx";
+import Login from "./pages/auth/Login.tsx";
+import Register from "./pages/auth/SignUp.tsx";
+import Main from "./pages/Main.tsx";
+import { Toaster } from 'react-hot-toast';
 
 export default function App() {
 	return (
 		<>
-			<main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col items-center gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-				<p>Start your conversations now!</p>
-				<Button asChild className="w-full md:w-36">
-					<Link to="/auth/login">Login!</Link>
-				</Button>
-				<Button asChild className="w-full md:w-36">
-					<Link to="/auth/signup">Sign Up?</Link>
-				</Button>
-			</main>
+			<Routes>
+				<Route path="/" Component={Header}>
+					<Route path="" Component={Main}></Route>
+					<Route path="auth/">
+						<Route path="login/" element={<Login />}></Route>
+						<Route path="signup/" element={<Register />} />
+					</Route>
+				</Route>
+			</Routes>
+			<Toaster /> 
 		</>
 	);
 }
