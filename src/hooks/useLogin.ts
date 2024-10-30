@@ -32,6 +32,7 @@ export default function useLogin() {
 			setLoading(false);
 			return true;
 		} catch (error: any) {
+			console.log(error);
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
 		}
