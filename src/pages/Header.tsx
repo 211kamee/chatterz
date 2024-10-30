@@ -52,6 +52,7 @@ export default function Header() {
 					<Switch
 						id="theme"
 						className=""
+						checked={theme === "dark"}
 						onClick={() => {
 							if (theme === "dark") {
 								document
@@ -123,6 +124,7 @@ export default function Header() {
 								<Switch
 									id="theme"
 									className="mx-4"
+									checked={theme === "dark"}
 									onClick={() => {
 										if (theme === "dark") {
 											document
