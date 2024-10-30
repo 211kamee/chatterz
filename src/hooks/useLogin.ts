@@ -16,7 +16,7 @@ export default function useLogin() {
 		}
 		try {
 			await axios
-				.post("/api/auth/login", {
+				.post("https://chatterzapi.onrender.com/api/auth/login", {
 					username,
 					password,
 				})

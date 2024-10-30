@@ -20,7 +20,7 @@ export default function useSignUp() {
 		}
 		try {
 			await axios
-				.post("/api/auth/signup", {
+				.post("https://chatterzapi.onrender.com/api/auth/signup", {
 					username,
 					email,
 					password,

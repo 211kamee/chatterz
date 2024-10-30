@@ -7,7 +7,7 @@ export default defineConfig({
 	server: {
 		// port: 3000,
 		proxy: {
-			"/api": "https://chatterzapi.onrender.com/",
+			// "/api": "https://chatterzapi.onrender.com/",
 			// "/api": "http://localhost:3000/",
 		},
 	},
