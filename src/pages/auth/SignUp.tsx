@@ -122,21 +122,21 @@ export default function SignUp() {
 						>
 							Create Account
 						</Button>
-						<Button variant="outline" className="w-full">
+						{/* <Button variant="outline" className="w-full">
 							Sign up with Google
-						</Button>
+						</Button> */}
 						<div className="text-center text-sm">
 							Already have an account?{" "}
 							<Link to="/auth/login" className="underline">
 								Sign in
 							</Link>
 						</div>
-						<div className="text-center text-sm">
+						{/* <div className="text-center text-sm">
 							Forgot Password?{" "}
 							<Link to="#" className="underline">
 								Reset
 							</Link>
-						</div>
+						</div> */}
 					</div>
 				</CardContent>
 			</Card>
