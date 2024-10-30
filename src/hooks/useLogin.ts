@@ -26,13 +26,13 @@ export default function useLogin() {
 					setUser(res.data);
 				})
 				.catch((err) => {
+					console.log(err);
 					setLoading(false);
 					throw err;
 				});
 			setLoading(false);
 			return true;
 		} catch (error: any) {
-			console.log(error);
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
 		}
