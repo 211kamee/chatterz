@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,15 +10,34 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function LoginForm() {
+import useSignUp from "@/hooks/useSignUp";
+
+export default function SignUp() {
+	const navigate = useNavigate();
+	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [inputs, setInputs] = useState({
 		username: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
 	});
+	const { signup, loading } = useSignUp();
+
+	useEffect(() => {
+		setIsButtonDisabled(false);
+	}, [inputs, setInputs]);
+
+	const handleSubmit = async (event: any) => {
+		event.preventDefault();
+		setIsButtonDisabled(true);
+		const success = await signup(inputs);
+
+		if (success) {
+			navigate("/auth/login");
+		}
+	};
 
 	return (
 		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-full flex justify-center items-center">
@@ -98,19 +117,26 @@ export default function LoginForm() {
 						<Button
 							type="submit"
 							className="w-full"
-							onClick={() => console.log(inputs)}
+							disabled={isButtonDisabled || loading}
+							onClick={handleSubmit}
 						>
-							Create an account
+							Create Account
 						</Button>
 						<Button variant="outline" className="w-full">
 							Sign up with Google
 						</Button>
-					</div>
-					<div className="mt-4 text-center text-sm">
-						Already have an account?{" "}
-						<Link to="/auth/login" className="underline">
-							Sign in
-						</Link>
+						<div className="text-center text-sm">
+							Already have an account?{" "}
+							<Link to="/auth/login" className="underline">
+								Sign in
+							</Link>
+						</div>
+						<div className="text-center text-sm">
+							Forgot Password?{" "}
+							<Link to="#" className="underline">
+								Reset
+							</Link>
+						</div>
 					</div>
 				</CardContent>
 			</Card>
