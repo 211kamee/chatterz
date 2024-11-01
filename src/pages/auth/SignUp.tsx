@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import useSignUp from "@/hooks/useSignUp";
 
 export default function SignUp() {
-	const navigate = useNavigate();
+	const { signup, loading } = useSignUp();
 	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [inputs, setInputs] = useState({
 		username: "",
@@ -23,21 +23,16 @@ export default function SignUp() {
 		password: "",
 		confirmPassword: "",
 	});
-	const { signup, loading } = useSignUp();
-
-	useEffect(() => {
-		setIsButtonDisabled(false);
-	}, [inputs, setInputs]);
 
 	const handleSubmit = async (event: any) => {
 		event.preventDefault();
 		setIsButtonDisabled(true);
-		const success = await signup(inputs);
-
-		if (success) {
-			navigate("/auth/login");
-		}
+		await signup(inputs);
 	};
+
+	useEffect(() => {
+		setIsButtonDisabled(false);
+	}, [inputs, setInputs]);
 
 	return (
 		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-full flex justify-center items-center">

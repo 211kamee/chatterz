@@ -1,40 +1,38 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import axios from "axios";
 import { useAuthContext } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function useLogin() {
+	const navigate = useNavigate();
 	const { setUser } = useAuthContext();
-
 	const [loading, setLoading] = useState(false);
 
 	const login = async ({ username = "", password = "" }) => {
-		setLoading(true);
 		if (!username || !password) {
 			toast.error("All fields are required");
 			return false;
 		}
+
+		setLoading(true);
 		try {
-			await axios
-				.post("https://chatterzapi.onrender.com/api/auth/login", {
-					username,
-					password,
-				})
-				.then((res) => {
-					toast.success(`Logged in as ${username}!`);
-					localStorage.setItem("user", JSON.stringify(res.data));
-					setUser(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-					setLoading(false);
-					throw err;
-				});
-			setLoading(false);
+			const res = await axios.post(
+				"https://chatterzapi.onrender.com/api/auth/login",
+				{ username, password }
+			);
+
+			setUser(res.data.user);
+			localStorage.setItem("user", JSON.stringify(res.data.user));
+			toast.success(`Logged in as ${username}!`);
+
+			navigate(`/${res.data.user.username}/`);
 			return true;
 		} catch (error: any) {
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
+		} finally {
+			setLoading(false);
 		}
 	};
 

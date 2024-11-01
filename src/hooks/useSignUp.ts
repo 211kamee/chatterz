@@ -1,11 +1,12 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
+import { toast } from "sonner"
 import axios from "axios";
 import { useAuthContext } from "@/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function useSignUp() {
+	const navigate = useNavigate();
 	const { setUser } = useAuthContext();
-
 	const [loading, setLoading] = useState(false);
 
 	const signup = async ({
@@ -14,33 +15,28 @@ export default function useSignUp() {
 		password = "",
 		confirmPassword = "",
 	}) => {
-		setLoading(true);
 		if (!handleInputError({ username, email, password, confirmPassword })) {
 			return false;
 		}
+
+		setLoading(true);
+
 		try {
-			await axios
-				.post("https://chatterzapi.onrender.com/api/auth/signup", {
-					username,
-					email,
-					password,
-					confirmpassword: confirmPassword,
-				})
-				.then((res) => {
-					toast.success("Account created successfully!");
-					localStorage.setItem("user", JSON.stringify(res.data));
-					setUser(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-					setLoading(false);
-					throw err;
-				});
-			setLoading(false);
+			const res = await axios.post(
+				"https://chatterzapi.onrender.com/api/auth/signup",
+				{ username, email, password, confirmPassword }
+			);
+
+			toast.success("Account created successfully!");
+			setUser(res.data.user);
+			localStorage.setItem("user", JSON.stringify(res.data.user));
+			navigate(`/${res.data.user.username}/`);
 			return true;
 		} catch (error: any) {
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -57,60 +53,32 @@ function handleInputError({
 		toast.error("All fields are required");
 		return false;
 	}
-
-	if (
-		!String(email).match(
-			/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-		)
-	) {
+	if (!isValidEmail(email)) {
 		toast.error("Not a valid email address");
 		return false;
 	}
-
 	if (password !== confirmPassword) {
 		toast.error("Passwords do not match!");
 		return false;
 	}
-
-	if (password.length < 8) {
-		toast.error("Password must be at least 8 characters long");
+	if (password.length < 8 || password.length > 20) {
+		toast.error("Password must be between 8 and 20 characters long");
 		return false;
 	}
-
-	if (password.includes(" ") || username.includes(" ")) {
-		toast.error("Username and password must not contain spaces!");
+	if (username.length < 4 || username.length > 20 || username.includes(" ")) {
+		toast.error("Username must be 4-20 characters with no spaces");
 		return false;
 	}
-
 	if (!isAlphaNumeric(username)) {
-		toast.error("Only alphabet and numbers are allowed!");
-		return false;
-	}
-
-	if (username.length < 4 || username.length > 20) {
-		toast.error("Username must be at least 4 to 20 characters long!");
-		return false;
-	}
-
-	if (password.length < 8 && password.length > 20) {
-		toast.error("Password must be at least 8 to 20 characters long!");
+		toast.error("Only letters and numbers allowed in username!");
 		return false;
 	}
 
 	return true;
 }
 
-const isAlphaNumeric = (str = "") => {
-	var code, i, len;
-
-	for (i = 0, len = str.length; i < len; i++) {
-		code = str.charCodeAt(i);
-		if (
-			!(code > 47 && code < 58) && // numeric (0-9)
-			!(code > 64 && code < 91) && // upper alpha (A-Z)
-			!(code > 96 && code < 123) // lower alpha (a-z)
-		)
-			return false;
-	}
-	return true;
-};
+const isAlphaNumeric = (str = "") => /^[a-zA-Z0-9]+$/.test(str);
+const isValidEmail = (email: string) =>
+	/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+		email
+	);

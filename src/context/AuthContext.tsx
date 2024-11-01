@@ -1,8 +1,8 @@
 import { useState, createContext, useContext } from "react";
 
 interface AuthContextType {
-	user: any; // Replace `any` with a more specific type if possible
-	setUser: (user: any) => void; // Adjust type accordingly
+	user: any;
+	setUser: (user: any) => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -10,13 +10,9 @@ export const AuthContext = createContext<AuthContextType>({
 	setUser: () => {},
 });
 
-interface AuthContextProviderProps {
-	children: any;
-}
-
-export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
+export const AuthContextProvider = ({ children }: { children: any }) => {
 	const [user, setUser] = useState(
-		JSON.parse(localStorage.getItem("user") || "null")
+		JSON.parse(localStorage.getItem("user") || "null") || null
 	);
 
 	return (
@@ -26,6 +22,4 @@ export const AuthContextProvider = ({ children }: AuthContextProviderProps) => {
 	);
 };
 
-export const useAuthContext = () => {
-	return useContext(AuthContext);
-};
+export const useAuthContext = () => useContext(AuthContext);

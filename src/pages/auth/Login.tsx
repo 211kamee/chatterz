@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,28 +14,23 @@ import useLogin from "@/hooks/useLogin";
 import { useEffect, useState } from "react";
 
 export default function Login() {
-	const navigate = useNavigate();
-
+	const { login, loading } = useLogin();
 	const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 	const [inputs, setInputs] = useState({
 		username: "",
 		password: "",
 	});
-	const { login, loading } = useLogin();
+
+	const handleSubmit = async (event: any) => {
+		event.preventDefault();
+		setIsButtonDisabled(true);
+		await login(inputs);
+	};
 
 	useEffect(() => {
 		setIsButtonDisabled(false);
 	}, [inputs, setInputs]);
 
-	const handleSubmit = async (event: any) => {
-		event.preventDefault();
-		setIsButtonDisabled(true);
-		const success = await login(inputs);
-
-		if (success) {
-			navigate("/auth/login");
-		}
-	};
 	return (
 		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-5/6 flex justify-center items-center">
 			<Card className="mx-auto max-w-sm">

@@ -1,8 +1,6 @@
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import {
 	Sheet,
 	SheetContent,
@@ -13,12 +11,10 @@ import {
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { ModeToggle } from "@/components/mode-toggle.tsx";
 
 export default function Header() {
-	const [theme, setTheme] = useState("Light");
-
 	return (
 		<>
 			<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -45,28 +41,7 @@ export default function Header() {
 					>
 						Contacts
 					</Link>
-
-					<Label htmlFor="theme">
-						{theme[0].toLocaleUpperCase() + theme.slice(1)}
-					</Label>
-					<Switch
-						id="theme"
-						className=""
-						checked={theme === "dark"}
-						onClick={() => {
-							if (theme === "dark") {
-								document
-									.querySelector("html")
-									?.setAttribute("class", theme);
-								setTheme("light");
-							} else {
-								document
-									.querySelector("html")
-									?.setAttribute("class", theme);
-								setTheme("dark");
-							}
-						}}
-					/>
+					<ModeToggle />
 				</nav>
 
 				<Sheet>
@@ -116,33 +91,7 @@ export default function Header() {
 							>
 								Contacts
 							</Link>
-							<div className="flex items-center">
-								<Label htmlFor="theme">
-									{theme[0].toLocaleUpperCase() +
-										theme.slice(1)}
-								</Label>
-								<Switch
-									id="theme"
-									className="mx-4"
-									checked={theme === "dark"}
-									onClick={() => {
-										if (theme === "dark") {
-											document
-												.querySelector("html")
-												?.setAttribute("class", theme);
-											setTheme("light");
-										} else {
-											document
-												.querySelector("html")
-												?.setAttribute(
-													"class",
-													`mx-4 ${theme}`
-												);
-											setTheme("dark");
-										}
-									}}
-								/>
-							</div>
+							<ModeToggle />
 						</nav>
 					</SheetContent>
 				</Sheet>
