@@ -4,7 +4,7 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/SignUp.tsx";
 import Main from "./pages/Hero.tsx";
 import Nav from "./pages/user/Nav.tsx";
-import UserDash from "./pages/user/UserDash.tsx";
+import ChatLayout from "./pages/user/Conversation.tsx";
 
 export default function App() {
 	return (
@@ -17,7 +17,7 @@ export default function App() {
 				</Route>
 			</Route>
 			<Route path="/:username/" element={<Nav />}>
-				<Route path="" element={<UserDash />}></Route>
+				<Route path="" element={<ChatLayout />}></Route>
 			</Route>
 		</Routes>
 	);

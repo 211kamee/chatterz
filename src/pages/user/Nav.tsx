@@ -12,9 +12,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
+import { useAuthContext } from "@/context/AuthContext";
 
 export default function Nav() {
-	const { logout, loading } = useLogout();
+	const { logout } = useLogout();
+	const { user, searchQuery, setSearchQuery } = useAuthContext();
 	return (
 		<>
 			<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -24,11 +26,12 @@ export default function Nav() {
 				<div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
 					<form className="ml-auto flex-1 sm:flex-initial">
 						<div className="relative">
-							<Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
 							<Input
-								type="search"
-								placeholder="Search..."
-								className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
+								placeholder="Search conversations..."
+								className="pl-9"
+								value={searchQuery}
+								onChange={(e) => setSearchQuery(e.target.value)}
 							/>
 						</div>
 					</form>
@@ -46,18 +49,16 @@ export default function Nav() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>My Account</DropdownMenuLabel>
+							<DropdownMenuLabel>{user.username}</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem>Settings</DropdownMenuItem>
 							<DropdownMenuItem>Support</DropdownMenuItem>
 							<DropdownMenuSeparator />
-							<ModeToggle />
-							<DropdownMenuItem
-								disabled={loading}
-								onClick={logout}
-							>
+							<DropdownMenuItem onClick={logout}>
 								Logout
 							</DropdownMenuItem>
+							<DropdownMenuSeparator />
+							<ModeToggle />
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</div>
