@@ -124,6 +124,7 @@ const ChatLayout = () => {
 			return res.data;
 		} catch (error: any) {
 			toast.error(error.response?.data || "Something went wrong!");
+			console.log(error);
 			return false;
 		} finally {
 		}
