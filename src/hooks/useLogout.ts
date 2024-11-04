@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import { useAuthContext } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,7 +13,8 @@ export default function useLogout() {
 		setLoading(true);
 		try {
 			await axios.post(
-				"https://chatterzapi.onrender.com/api/auth/logout"
+				"https://chatterzapi.onrender.com/api/auth/logout",
+				{ withCredentials: true }
 			);
 
 			setUser(null);

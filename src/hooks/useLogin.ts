@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { toast } from "sonner"
+import { toast } from "sonner";
 import axios from "axios";
 import { useAuthContext } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,8 @@ export default function useLogin() {
 		try {
 			const res = await axios.post(
 				"https://chatterzapi.onrender.com/api/auth/login",
-				{ username, password }
+				{ username, password },
+				{ withCredentials: true }
 			);
 
 			setUser(res.data.user);
