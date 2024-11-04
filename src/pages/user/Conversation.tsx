@@ -111,7 +111,7 @@ const ChatLayout = () => {
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 
 	// Sample data - you would typically fetch this from an API
-	async () => {
+	(async () => {
 		try {
 			const res = await axios.get(
 				"https://chatterz.onrender.com/api/conversations",
@@ -119,15 +119,15 @@ const ChatLayout = () => {
 					withCredentials: true,
 				}
 			);
-			console.log("data", res.data);
 
+			console.log("data", res.data);
 			return res.data;
 		} catch (error: any) {
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
 		} finally {
 		}
-	};
+	})();
 
 	const conversations = [
 		{
