@@ -107,18 +107,16 @@ const ConversationList = ({
 };
 
 const ChatLayout = () => {
+	const { API_URL } = useAuthContext();
 	const [selectedChat, setSelectedChat] = useState<any | null>(null);
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 
 	// Sample data - you would typically fetch this from an API
 	(async () => {
 		try {
-			const res = await axios.get(
-				"https://chatterz.onrender.com/api/conversations",
-				{
-					withCredentials: true,
-				}
-			);
+			const res = await axios.get(API_URL + "/api/conversations", {
+				withCredentials: true,
+			});
 
 			console.log("data", res.data);
 			return res.data;
@@ -127,6 +125,7 @@ const ChatLayout = () => {
 			console.log(error);
 			return false;
 		} finally {
+			console.log("done");
 		}
 	})();
 

@@ -6,16 +6,15 @@ import axios from "axios";
 
 export default function useLogout() {
 	const navigate = useNavigate();
-	const { setUser } = useAuthContext();
+	const { API_URL, setUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 
 	const logout = async () => {
 		setLoading(true);
 		try {
-			await axios.post(
-				"https://chatterzapi.onrender.com/api/auth/logout",
-				{ withCredentials: true }
-			);
+			await axios.post(API_URL + "/api/auth/logout", {
+				withCredentials: true,
+			});
 
 			setUser(null);
 			localStorage.clear();

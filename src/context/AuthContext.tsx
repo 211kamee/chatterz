@@ -5,6 +5,7 @@ interface AuthContextType {
 	setUser: (user: any) => void;
 	searchQuery: any;
 	setSearchQuery: (user: any) => void;
+	API_URL: any;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -12,18 +13,20 @@ export const AuthContext = createContext<AuthContextType>({
 	setUser: () => {},
 	searchQuery: null,
 	setSearchQuery: () => {},
+	API_URL: null,
 });
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
+	const API_URL = "https://chatterzapi.onrender.com";
+	// const API_URL = "http://localhost:3000";
+	const [searchQuery, setSearchQuery] = useState("");
 	const [user, setUser] = useState(
 		JSON.parse(localStorage.getItem("user") || "null") || null
 	);
 
-	const [searchQuery, setSearchQuery] = useState("");
-
 	return (
 		<AuthContext.Provider
-			value={{ user, setUser, searchQuery, setSearchQuery }}
+			value={{ API_URL, user, setUser, searchQuery, setSearchQuery }}
 		>
 			{children}
 		</AuthContext.Provider>

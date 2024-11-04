@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function useLogin() {
 	const navigate = useNavigate();
-	const { setUser } = useAuthContext();
+	const { API_URL, setUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 
 	const login = async ({ username = "", password = "" }) => {
@@ -18,7 +18,7 @@ export default function useLogin() {
 		setLoading(true);
 		try {
 			const res = await axios.post(
-				"https://chatterzapi.onrender.com/api/auth/login",
+				API_URL + "/api/auth/login",
 				{ username, password },
 				{ withCredentials: true }
 			);

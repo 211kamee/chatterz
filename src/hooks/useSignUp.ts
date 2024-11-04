@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function useSignUp() {
 	const navigate = useNavigate();
-	const { setUser } = useAuthContext();
+	const { API_URL, setUser } = useAuthContext();
 	const [loading, setLoading] = useState(false);
 
 	const signup = async ({
@@ -23,7 +23,7 @@ export default function useSignUp() {
 
 		try {
 			const res = await axios.post(
-				"https://chatterzapi.onrender.com/api/auth/signup",
+				API_URL + "/api/auth/signup",
 				{ username, email, password, confirmPassword },
 				{ withCredentials: true }
 			);
