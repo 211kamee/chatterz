@@ -112,7 +112,7 @@ const ChatLayout = () => {
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 
 	// Sample data - you would typically fetch this from an API
-	const fetchConversations = async () => {
+	(async () => {
 		try {
 			const res = await axios.get(API_URL + "/api/conversations", {
 				withCredentials: true,
@@ -127,9 +127,7 @@ const ChatLayout = () => {
 		} finally {
 			console.log("done");
 		}
-	};
-
-	console.log(fetchConversations());
+	})();
 
 	const conversations = [
 		{
