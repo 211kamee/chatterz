@@ -5,6 +5,8 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ArrowLeft, Send } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext.tsx";
+import { toast } from "sonner";
+import axios from "axios";
 
 // Rest of the code remains exactly the same...
 const ContactCard = ({
@@ -109,17 +111,23 @@ const ChatLayout = () => {
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 
 	// Sample data - you would typically fetch this from an API
-	// const conversations = (async () => {
-	// 	try {
-	// 		return await axios.get(
-	// 			"https://chatterzapi.onrender.com/api/conversations"
-	// 		);
-	// 	} catch (error: any) {
-	// 		toast.error(error.response?.data || "Something went wrong!");
-	// 		return false;
-	// 	} finally {
-	// 	}
-	// })();
+	async () => {
+		try {
+			const res = await axios.get(
+				"https://chatterz.onrender.com/api/conversations",
+				{
+					withCredentials: true,
+				}
+			);
+			console.log(res.data);
+
+			return res.data;
+		} catch (error: any) {
+			toast.error(error.response?.data || "Something went wrong!");
+			return false;
+		} finally {
+		}
+	};
 
 	const conversations = [
 		{
