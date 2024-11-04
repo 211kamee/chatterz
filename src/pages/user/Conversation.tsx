@@ -119,7 +119,7 @@ const ChatLayout = () => {
 					withCredentials: true,
 				}
 			);
-			console.log(res.data);
+			console.log("data", res.data);
 
 			return res.data;
 		} catch (error: any) {
