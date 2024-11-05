@@ -27,9 +27,10 @@ export default function useLogin() {
 			localStorage.setItem("user", JSON.stringify(res.data.user));
 			toast.success(`Logged in as ${username}!`);
 
-			navigate(`/${res.data.user.username}/`);
+			navigate(`/user/convo`);
 			return true;
 		} catch (error: any) {
+			console.log([error.message, error]);
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
 		} finally {

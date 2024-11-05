@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -16,7 +16,8 @@ import { useAuthContext } from "@/context/AuthContext";
 
 export default function Nav() {
 	const { logout } = useLogout();
-	const { user, searchQuery, setSearchQuery } = useAuthContext();
+	const { user } = useAuthContext();
+	const navigate = useNavigate();
 	return (
 		<>
 			<header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -28,10 +29,9 @@ export default function Nav() {
 						<div className="relative">
 							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
 							<Input
-								placeholder="Search conversations..."
+								placeholder="Search people..."
 								className="pl-9"
-								value={searchQuery}
-								onChange={(e) => setSearchQuery(e.target.value)}
+								
 							/>
 						</div>
 					</form>
@@ -49,9 +49,15 @@ export default function Nav() {
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
-							<DropdownMenuLabel>{user.username}</DropdownMenuLabel>
+							<DropdownMenuLabel>
+								{user.username}
+							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
-							<DropdownMenuItem>Settings</DropdownMenuItem>
+							<DropdownMenuItem
+								onClick={() => (navigate("/user/settings"))}
+							>
+								Settings
+							</DropdownMenuItem>
 							<DropdownMenuItem>Support</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem onClick={logout}>

@@ -12,9 +12,13 @@ export default function useLogout() {
 	const logout = async () => {
 		setLoading(true);
 		try {
-			await axios.post(API_URL + "/api/auth/logout", {
-				withCredentials: true,
-			});
+			await axios.post(
+				API_URL + "/api/auth/logout",
+				{},
+				{
+					withCredentials: true,
+				}
+			);
 
 			setUser(null);
 			localStorage.clear();
@@ -22,6 +26,7 @@ export default function useLogout() {
 
 			navigate("/");
 		} catch (error: any) {
+			console.log([error.message, error]);
 			toast.error(error.response?.data || "Something went wrong!");
 		} finally {
 			setLoading(false);

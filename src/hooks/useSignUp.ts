@@ -31,9 +31,10 @@ export default function useSignUp() {
 			toast.success("Account created successfully!");
 			setUser(res.data.user);
 			localStorage.setItem("user", JSON.stringify(res.data.user));
-			navigate(`/${res.data.user.username}/`);
+			navigate(`/user/convo`);
 			return true;
 		} catch (error: any) {
+			console.log([error.message, error]);
 			toast.error(error.response?.data || "Something went wrong!");
 			return false;
 		} finally {
