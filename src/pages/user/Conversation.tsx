@@ -132,10 +132,10 @@ const ChatLayout = () => {
 		})();
 	}, []);
 
-	const msgLoader = async () => {
+	const msgLoader = async (people: any) => {
 		try {
 			const res = await axios.get(
-				API_URL + "/api/messages/" + selectedChat.username,
+				API_URL + "/api/messages/" + people.username,
 				{
 					withCredentials: true,
 				}
@@ -148,8 +148,10 @@ const ChatLayout = () => {
 	};
 
 	const handleChatSelect = (people: any) => {
-		setSelectedChat(people);
-		msgLoader();
+		try {
+			setSelectedChat(people);
+		} catch (error) {}
+		msgLoader(people);
 		setIsMobileListVisible(false);
 	};
 
@@ -160,7 +162,6 @@ const ChatLayout = () => {
 
 	const handleSendMsg = async () => {
 		if (!sendMsg.trim()) {
-			toast.error("Please enter a message!");
 			return;
 		}
 		setLoading(true);
@@ -177,7 +178,7 @@ const ChatLayout = () => {
 			setLoading(false);
 			console.log([error.message, error]);
 		}
-		msgLoader();
+		msgLoader(selectedChat);
 		setLoading(false);
 	};
 
@@ -256,13 +257,23 @@ const ChatLayout = () => {
 						</ScrollArea>
 
 						{/* Message Input */}
-						<div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+						<div className="p-2 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
 							<div className="flex space-x-2">
 								<Input
 									placeholder="Type a message..."
 									className="flex-1 bg-gray-200 dark:bg-gray-900"
+									id="messageInput"
 									value={sendMsg}
 									onChange={(e) => setSendMsg(e.target.value)}
+									onKeyDown={(e) => {
+										if (
+											e.key === "Enter" &&
+											!loading &&
+											sendMsg.trim()
+										) {
+											handleSendMsg();
+										}
+									}}
 								/>
 								<Button
 									size="icon"
