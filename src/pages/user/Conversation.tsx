@@ -105,7 +105,7 @@ const ConversationList = ({
 };
 
 const ChatLayout = () => {
-	const { user, API_URL } = useAuthContext();
+	const { user, setUser, API_URL } = useAuthContext();
 	const [selectedChat, setSelectedChat] = useState<any | null>(null);
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 	const [conversations, setConversations] = useState([]);
@@ -129,6 +129,7 @@ const ChatLayout = () => {
 			} catch (error: any) {
 				console.log([error.message, error]);
 				toast.error(error.response?.data || "Something went wrong!");
+				setUser(null);
 				navigate("/auth");
 				return false;
 			}
