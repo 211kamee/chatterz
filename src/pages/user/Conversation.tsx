@@ -132,12 +132,10 @@ const ChatLayout = () => {
 		})();
 	}, []);
 
-	const handleChatSelect = async (people: any) => {
-		setSelectedChat(people);
-
+	const msgLoader = async () => {
 		try {
 			const res = await axios.get(
-				API_URL + "/api/messages/" + people.username,
+				API_URL + "/api/messages/" + selectedChat.username,
 				{
 					withCredentials: true,
 				}
@@ -147,7 +145,11 @@ const ChatLayout = () => {
 			console.log([error.message, error]);
 			toast.error(error.response?.data || "Something went wrong!");
 		}
+	};
 
+	const handleChatSelect = (people: any) => {
+		setSelectedChat(people);
+		msgLoader();
 		setIsMobileListVisible(false);
 	};
 
@@ -175,6 +177,7 @@ const ChatLayout = () => {
 			setLoading(false);
 			console.log([error.message, error]);
 		}
+		msgLoader();
 		setLoading(false);
 	};
 
