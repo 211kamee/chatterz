@@ -7,6 +7,7 @@ import { ArrowLeft, Search, Send } from "lucide-react";
 import { useAuthContext } from "@/context/AuthContext.tsx";
 import { toast } from "sonner";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 // Rest of the code remains exactly the same...
 const ContactCard = ({
@@ -111,6 +112,7 @@ const ChatLayout = () => {
 	const [messages, setMessages] = useState([]);
 	const [sendMsg, setSendMsg] = useState("");
 	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
 
 	// Sample data - you would typically fetch this from an API
 	useEffect(() => {
@@ -127,6 +129,7 @@ const ChatLayout = () => {
 			} catch (error: any) {
 				console.log([error.message, error]);
 				toast.error(error.response?.data || "Something went wrong!");
+				navigate("/auth");
 				return false;
 			}
 		})();
