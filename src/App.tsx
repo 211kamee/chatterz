@@ -4,7 +4,7 @@ import Login from "./pages/auth/Login.tsx";
 import Register from "./pages/auth/SignUp.tsx";
 import Main from "./pages/auth/Hero.tsx";
 import Nav from "./pages/user/Nav.tsx";
-import ChatLayout from "./pages/user/Conversation.tsx";
+import ChatLayout from "./pages/user/ChatLayout.tsx";
 import { useAuthContext } from "./context/AuthContext.tsx";
 import { useEffect } from "react";
 
