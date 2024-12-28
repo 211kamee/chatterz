@@ -13,10 +13,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
-	const dev = false;
-	const API_URL = dev
-		? "http://localhost:3000"
-		: "https://chatterzapi.onrender.com";
+	const API_URL = "https://chatterzapi.onrender.com";
 	const [user, setUser] = useState(
 		JSON.parse(localStorage.getItem("user") || "null") || null
 	);

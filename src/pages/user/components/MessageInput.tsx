@@ -17,7 +17,7 @@ const MessageInput = ({
 	loading,
 }: MessageInputProps) => {
 	return (
-		<div className="w-full p-2 bg-white dark:bg-gray-800 border-t">
+		<div className="sticky bottom-0 w-full p-2 bg-white dark:bg-gray-800 border-t">
 			<div className="flex space-x-2">
 				<Input
 					placeholder="Type a message..."

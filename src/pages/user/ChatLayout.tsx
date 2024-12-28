@@ -100,11 +100,12 @@ const ChatLayout = () => {
 	};
 
 	return (
-		<div className="flex h-[100dvh] md:h-[calc(100vh_-_theme(spacing.16))] bg-gray-100 dark:bg-gray-900">
+		<div className="flex h-[calc(100dvh_-_theme(spacing.16))] bg-gray-100 dark:bg-gray-900 relative">
 			{/* Conversation List Panel */}
 			<div
-				className={`w-full md:w-80 md:flex-shrink-0 bg-white dark:bg-gray-800 border-r flex-col
-        ${isMobileListVisible ? "flex" : "hidden md:flex"}`}
+				className={`w-full md:w-80 md:flex-shrink-0 bg-white dark:bg-gray-800 border-r flex-col ${
+					isMobileListVisible ? "flex" : "hidden md:flex"
+				}`}
 			>
 				<ConversationList
 					conversations={conversations}
@@ -121,7 +122,7 @@ const ChatLayout = () => {
 				{selectedChat ? (
 					<>
 						{/* Chat Header */}
-						<div className="p-2 border-b bg-white dark:bg-gray-800 flex items-center">
+						<div className="sticky top-15 p-2 border-b bg-white dark:bg-gray-800 flex items-center">
 							<Button
 								variant="ghost"
 								size="icon"

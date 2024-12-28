@@ -40,7 +40,7 @@ const ConversationList = ({
 				</div>
 			</div>
 
-			<ScrollArea className="flex-1 h-[calc(100dvh_-_8rem)] divide-y divide-gray-200 dark:divide-gray-700">
+			<ScrollArea className="flex-1 divide-y divide-gray-200 dark:divide-gray-700">
 				{filteredConversations.length > 0 ? (
 					filteredConversations.map((people) => (
 						<ContactCard

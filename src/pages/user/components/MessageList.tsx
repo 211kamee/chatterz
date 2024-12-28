@@ -22,7 +22,7 @@ const MessageList = ({ messages, currentUserID }: MessageListProps) => {
   }, [messages]);
 
   return (
-    <ScrollArea className="flex-1 p-4 bg-gray-200 dark:bg-gray-900 h-[calc(100dvh_-_8rem)] md:h-auto">
+    <ScrollArea className="flex-1 p-4 bg-gray-200 dark:bg-gray-900 h-[calc(100dvh_-_11rem)] md:h-auto">
       <div className="flex flex-col">
         {messages.map((message, index) => (
           <div
