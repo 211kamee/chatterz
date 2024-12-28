@@ -40,7 +40,7 @@ const MessageList = ({ messages, currentUserID }: MessageListProps) => {
 					>
 						<div
 							style={{ overflowWrap: "anywhere" }}
-							className={`max-w-[70%] p-3 rounded-lg ${
+							className={`max-w-[90%] p-3 rounded-lg ${
 								message.senderID === currentUserID
 									? "bg-white text-gray-700 dark:bg-gray-700 dark:text-white"
 									: "bg-gray-700 text-white dark:bg-white dark:text-gray-700"
