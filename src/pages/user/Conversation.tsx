@@ -189,7 +189,7 @@ const ChatLayout = () => {
 
 			{/* Chat Panel */}
 			<div
-				className={`max-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex flex-col ${
+				className={`h-full flex-1 flex flex-col ${
 					!isMobileListVisible ? "flex" : "hidden md:flex"
 				}`}
 			>
