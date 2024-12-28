@@ -13,20 +13,12 @@ import { useNavigate } from "react-router-dom";
 const ContactCard = ({
 	username = "User",
 	avatarUrl = "",
-	isSelected = { Boolean },
 	onClick = () => {},
 }) => {
 	return (
 		<div
 			onClick={onClick}
-			className={`
-        flex items-center p-4 space-x-4 cursor-pointer transition-colors
-        ${
-			isSelected
-				? "bg-gray-100 dark:bg-gray-700"
-				: "hover:bg-gray-50 dark:hover:bg-gray-800"
-		}
-      `}
+			className="flex items-center p-4 space-x-4 border cursor-pointer transition-colors hover:bg-gray-200 dark:hover:bg-gray-900"
 		>
 			<div className="relative">
 				<Avatar>
@@ -53,11 +45,9 @@ const ContactCard = ({
 
 const ConversationList = ({
 	conversations,
-	selectedId,
 	onSelect,
 }: {
 	conversations: any;
-	selectedId: any;
 	onSelect: any;
 }) => {
 	const [searchQuery, setSearchQuery] = useState("");
@@ -66,13 +56,13 @@ const ConversationList = ({
 	);
 
 	return (
-		<div className="flex flex-col h-full">
-			<div className="p-4 border-b border-gray-200 dark:border-gray-700">
+		<>
+			<div className="p-4">
 				<div className="relative">
 					<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-500" />
 					<Input
 						placeholder="Search conversations..."
-						className="pl-9"
+						className="pl-9 dark:bg-gray-900 border-b "
 						value={searchQuery}
 						onChange={(e) => setSearchQuery(e.target.value)}
 					/>
@@ -80,27 +70,24 @@ const ConversationList = ({
 			</div>
 
 			{/* Conversation List */}
-			<ScrollArea className="flex-1">
-				<div className="divide-y divide-gray-200 dark:divide-gray-700">
-					{filteredConversations.length > 0 ? (
-						filteredConversations.map((people: any) => {
-							return (
-								<ContactCard
-									key={people._id}
-									{...people}
-									isSelected={selectedId === people._id}
-									onClick={() => onSelect(people)}
-								/>
-							);
-						})
-					) : (
-						<div className="p-4 text-center text-gray-500 dark:text-gray-400">
-							No conversations found
-						</div>
-					)}
-				</div>
+			<ScrollArea className="flex-1 divide-y divide-gray-200 dark:divide-gray-700">
+				{filteredConversations.length > 0 ? (
+					filteredConversations.map((people: any) => {
+						return (
+							<ContactCard
+								key={people._id}
+								{...people}
+								onClick={() => onSelect(people)}
+							/>
+						);
+					})
+				) : (
+					<div className="p-4 text-center text-gray-500 dark:text-gray-400">
+						No conversations found
+					</div>
+				)}
 			</ScrollArea>
-		</div>
+		</>
 	);
 };
 
@@ -130,6 +117,7 @@ const ChatLayout = () => {
 				console.log([error.message, error]);
 				toast.error(error.response?.data || "Something went wrong!");
 				setUser(null);
+				localStorage.clear();
 				navigate("/auth");
 				return false;
 			}
@@ -187,21 +175,14 @@ const ChatLayout = () => {
 	};
 
 	return (
-		<div className="flex min-h-[calc(100vh_-_theme(spacing.16))] bg-gray-100 dark:bg-gray-900">
+		<div className="flex h-[calc(100vh_-_theme(spacing.16))] bg-gray-100 dark:bg-gray-900">
 			{/* Conversation List Panel */}
 			<div
-				className={`w-full md:w-80 md:flex-shrink-0 bg-white dark:bg-gray-800 
-					border-r border-gray-200 dark:border-gray-700 flex-col 
-					${isMobileListVisible ? "flex" : "hidden md:flex"}`}
+				className={`w-full md:w-80 md:flex-shrink-0 bg-white-100 dark:bg-gray-800 border-r flex-col 
+				${isMobileListVisible ? "flex flex-col" : "hidden md:flex"}`}
 			>
-				<div className="p-4 border-b border-gray-200 dark:border-gray-700">
-					<h1 className="text-xl font-semibold dark:text-white">
-						Messages
-					</h1>
-				</div>
 				<ConversationList
 					conversations={conversations}
-					selectedId={selectedChat?.id}
 					onSelect={handleChatSelect}
 				/>
 			</div>
@@ -215,7 +196,7 @@ const ChatLayout = () => {
 				{selectedChat ? (
 					<>
 						{/* Chat Header */}
-						<div className="p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex items-center">
+						<div className="p-4 border-b bg-white dark:bg-gray-800 flex items-center">
 							<Button
 								variant="ghost"
 								size="icon"
@@ -232,7 +213,7 @@ const ChatLayout = () => {
 						</div>
 
 						{/* Messages Area */}
-						<ScrollArea className="flex-1 p-4 bg-gray-200 dark:bg-gray-900">
+						<ScrollArea className="flex-1 p-4 bg-gray-200 dark:bg-gray-900 max-h-">
 							<div className="flex flex-col-reverse">
 								{messages.map((message: any) => {
 									return (
@@ -261,7 +242,7 @@ const ChatLayout = () => {
 						</ScrollArea>
 
 						{/* Message Input */}
-						<div className="p-2 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+						<div className="p-2 bg-white dark:bg-gray-800 border-t bottom-0">
 							<div className="flex space-x-2">
 								<Input
 									placeholder="Type a message..."

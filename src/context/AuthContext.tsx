@@ -3,18 +3,20 @@ import { useState, createContext, useContext } from "react";
 interface AuthContextType {
 	user: any;
 	setUser: (user: any) => void;
-	API_URL: any;
+	API_URL: String;
 }
 
 export const AuthContext = createContext<AuthContextType>({
 	user: null,
 	setUser: () => {},
-	API_URL: null,
+	API_URL: "",
 });
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
-	const API_URL = "https://chatterzapi.onrender.com";
-	// const API_URL = "http://localhost:3000";
+	const dev = false;
+	const API_URL = dev
+		? "http://localhost:3000"
+		: "https://chatterzapi.onrender.com";
 	const [user, setUser] = useState(
 		JSON.parse(localStorage.getItem("user") || "null") || null
 	);

@@ -19,11 +19,10 @@ export default function useLogout() {
 					withCredentials: true,
 				}
 			);
-
+			
 			setUser(null);
 			localStorage.clear();
 			toast.success("Logged out successfully!");
-
 			navigate("/");
 		} catch (error: any) {
 			console.log([error.message, error]);
