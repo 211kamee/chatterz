@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { useAuthContext } from "@/context/AuthContext";
+import { toast } from "sonner";
 // import { Search } from "lucide-react";
 // import { Input } from "@/components/ui/input";
 
@@ -19,6 +20,12 @@ export default function Nav() {
 	const { logout } = useLogout();
 	const { user } = useAuthContext();
 	const navigate = useNavigate();
+
+	if (!user || !user.username) {
+		toast.error("Login required!");
+		localStorage.clear(); // Clear local storage on logout scenario
+		navigate("/auth"); // Redirect to authentication page
+	}
 
 	return (
 		<>

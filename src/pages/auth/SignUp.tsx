@@ -35,7 +35,7 @@ export default function SignUp() {
 	}, [inputs, setInputs]);
 
 	return (
-		<div className="min-h-[calc(100vh_-_theme(spacing.16))] w-full h-full flex justify-center items-center">
+		<div className="min-h-[calc(100dvh_-_theme(spacing.16))] w-full h-full flex justify-center items-center">
 			<Card className="mx-auto max-w-sm ">
 				<CardHeader>
 					<CardTitle className="text-xl">Sign Up</CardTitle>
