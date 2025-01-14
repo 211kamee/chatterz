@@ -15,7 +15,8 @@ interface MessageListProps {
 
 const MessageList = ({ messages, currentUserID }: MessageListProps) => {
 	const lastMessageRef = useRef<HTMLDivElement>(null);
-
+	console.log(messages);
+	
 	useEffect(() => {
 		// Scroll to bottom when messages change
 		lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });

@@ -2,10 +2,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useAuthContext } from "@/context/AuthContext";
 import { toast } from "sonner";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "@/context/AuthContext.tsx";
+import { useSocketContext } from "@/context/SocketContext.tsx";
 
 import ConversationList from "./components/ConversationList.tsx";
 import MessageList from "./components/MessageList.tsx";
@@ -25,6 +26,7 @@ interface Message {
 
 const ChatLayout = () => {
 	const { user, setUser, API_URL } = useAuthContext();
+	const { msg, setMsg } = useSocketContext();
 	const [selectedChat, setSelectedChat] = useState<User | null>(null);
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 	const [conversations, setConversations] = useState<User[]>([]);
@@ -51,9 +53,8 @@ const ChatLayout = () => {
 				navigate("/auth");
 			}
 		};
-
 		fetchConversations();
-	}, [API_URL, navigate, setUser]);
+	}, []);
 
 	const msgLoader = async (people: User) => {
 		try {
@@ -63,6 +64,7 @@ const ChatLayout = () => {
 					withCredentials: true,
 				}
 			);
+			setMsg([]);
 			setMessages(res.data);
 		} catch (error: any) {
 			console.log([error.message, error]);
@@ -92,6 +94,7 @@ const ChatLayout = () => {
 				{ withCredentials: true }
 			);
 			setSendMsg("");
+
 			await msgLoader(selectedChat);
 		} catch (error: any) {
 			console.log([error.message, error]);
@@ -139,7 +142,8 @@ const ChatLayout = () => {
 						</div>
 
 						<MessageList
-							messages={messages}
+							// messages={messages}
+							messages={[...messages, ...msg]}
 							currentUserID={user._id}
 						/>
 

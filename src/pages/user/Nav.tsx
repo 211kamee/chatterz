@@ -13,18 +13,21 @@ import useLogout from "@/hooks/useLogout";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { useAuthContext } from "@/context/AuthContext";
 import { toast } from "sonner";
+import { useEffect } from "react";
 // import { Search } from "lucide-react";
 // import { Input } from "@/components/ui/input";
 
 export default function Nav() {
 	const { logout } = useLogout();
-	const { user } = useAuthContext();
 	const navigate = useNavigate();
+	const { user } = useAuthContext();
 
-	if (!user || !user.username) {
+	if (!user) {
 		toast.error("Login required!");
 		localStorage.clear(); // Clear local storage on logout scenario
-		navigate("/auth"); // Redirect to authentication page
+		useEffect(() => {
+			navigate("/auth"); // Redirect to authentication page
+		});
 	}
 
 	return (
@@ -58,7 +61,7 @@ export default function Nav() {
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align="end">
 							<DropdownMenuLabel>
-								{`@${user.username}`}
+								{`@${user?.username}`}
 							</DropdownMenuLabel>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem

@@ -1,5 +1,5 @@
 import { Menu } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import {
 	Sheet,
@@ -13,8 +13,18 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { ModeToggle } from "@/components/mode-toggle.tsx";
+import { useAuthContext } from "@/context/AuthContext";
+import { useEffect } from "react";
 
 export default function Header() {
+	const navigate = useNavigate();
+	const { user } = useAuthContext();
+	
+	if (user) {
+		useEffect(() => {
+			navigate("/user"); // Redirect to authentication page
+		});
+	}
 
 	return (
 		<>

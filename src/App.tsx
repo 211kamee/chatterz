@@ -35,16 +35,7 @@ export default function App() {
 				</Route>
 			</Route>
 			<Route path="/user/">
-				<Route
-					path=""
-					element={
-						user ? (
-							<Navigate to="/user/convo" />
-						) : (
-							<Navigate to="/auth" />
-						)
-					}
-				></Route>
+				<Route path="" element={<Navigate to="/user/convo" />}></Route>
 				<Route path="convo/" element={<Nav />}>
 					<Route path="" element={<ChatLayout />}></Route>
 				</Route>
