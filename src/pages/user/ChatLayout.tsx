@@ -1,16 +1,16 @@
 // pages/ChatLayout.tsx
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { toast } from "sonner";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useAuthContext } from "@/context/AuthContext.tsx";
-import { useSocketContext } from "@/context/SocketContext.tsx";
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
+import { toast } from 'sonner';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '@/context/AuthContext.tsx';
+import { useSocketContext } from '@/context/SocketContext.tsx';
 
-import ConversationList from "./components/ConversationList.tsx";
-import MessageList from "./components/MessageList.tsx";
-import MessageInput from "./components/MessageInput.tsx";
+import ConversationList from './components/ConversationList.tsx';
+import MessageList from './components/MessageList.tsx';
+import MessageInput from './components/MessageInput.tsx';
 
 interface User {
 	_id: string;
@@ -31,7 +31,7 @@ const ChatLayout = () => {
 	const [isMobileListVisible, setIsMobileListVisible] = useState(true);
 	const [conversations, setConversations] = useState<User[]>([]);
 	const [messages, setMessages] = useState<Message[]>([]);
-	const [sendMsg, setSendMsg] = useState("");
+	const [sendMsg, setSendMsg] = useState('');
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
@@ -39,18 +39,19 @@ const ChatLayout = () => {
 		const fetchConversations = async () => {
 			try {
 				const res = await axios.get(
-					API_URL + "/api/conversations/people",
+					API_URL + '/api/conversations/people',
 					{
 						withCredentials: true,
 					}
 				);
 				setConversations(res.data);
+				console.log(conversations);
 			} catch (error: any) {
 				console.log([error.message, error]);
-				toast.error(error.response?.data || "Something went wrong!");
+				toast.error(error.response?.data || 'Something went wrong!');
 				setUser(null);
 				localStorage.clear();
-				navigate("/auth");
+				navigate('/auth');
 			}
 		};
 		fetchConversations();
@@ -59,7 +60,7 @@ const ChatLayout = () => {
 	const msgLoader = async (people: User) => {
 		try {
 			const res = await axios.get(
-				API_URL + "/api/messages/" + people.username,
+				API_URL + '/api/messages/' + people.username,
 				{
 					withCredentials: true,
 				}
@@ -68,7 +69,7 @@ const ChatLayout = () => {
 			setMessages(res.data);
 		} catch (error: any) {
 			console.log([error.message, error]);
-			toast.error(error.response?.data || "Something went wrong!");
+			toast.error(error.response?.data || 'Something went wrong!');
 		}
 	};
 
@@ -89,11 +90,11 @@ const ChatLayout = () => {
 		setLoading(true);
 		try {
 			await axios.post(
-				API_URL + "/api/messages/" + selectedChat.username,
+				API_URL + '/api/messages/' + selectedChat.username,
 				{ message: sendMsg.trim() },
 				{ withCredentials: true }
 			);
-			setSendMsg("");
+			setSendMsg('');
 
 			await msgLoader(selectedChat);
 		} catch (error: any) {
@@ -107,7 +108,7 @@ const ChatLayout = () => {
 			{/* Conversation List Panel */}
 			<div
 				className={`w-full md:w-80 md:flex-shrink-0 bg-white dark:bg-gray-800 border-r flex-col ${
-					isMobileListVisible ? "flex" : "hidden md:flex"
+					isMobileListVisible ? 'flex' : 'hidden md:flex'
 				}`}
 			>
 				<ConversationList
@@ -119,7 +120,7 @@ const ChatLayout = () => {
 			{/* Chat Panel */}
 			<div
 				className={`h-full flex-1 flex flex-col ${
-					isMobileListVisible ? "hidden" : "flex"
+					isMobileListVisible ? 'hidden' : 'flex'
 				}`}
 			>
 				{selectedChat ? (
@@ -143,7 +144,7 @@ const ChatLayout = () => {
 
 						<MessageList
 							// messages={messages}
-							messages={[...messages, ...msg]}
+							messages={[...msg, ...messages]}
 							currentUserID={user._id}
 						/>
 

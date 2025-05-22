@@ -68,6 +68,19 @@
 	}
 }
 
+@layer utilities {
+	.scroll-area::-webkit-scrollbar {
+		width: 6px;
+	}
+	.scroll-area::-webkit-scrollbar-thumb {
+		background-color: theme('colors.gray.400'); /* or use a hex */
+		border-radius: 9999px;
+	}
+	.scroll-area::-webkit-scrollbar-track {
+		background: transparent;
+	}
+}
+
 * {
 	box-sizing: border-box;
 	margin: 0;
