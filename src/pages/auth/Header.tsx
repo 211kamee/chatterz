@@ -19,7 +19,7 @@ import { useEffect } from "react";
 export default function Header() {
 	const navigate = useNavigate();
 	const { user } = useAuthContext();
-	
+
 	if (user) {
 		useEffect(() => {
 			navigate("/user"); // Redirect to authentication page
@@ -50,7 +50,7 @@ export default function Header() {
 						to="#"
 						className="text-muted-foreground transition-colors hover:text-foreground"
 					>
-						Contacts
+						Contact us
 					</Link>
 					<ModeToggle />
 				</nav>
@@ -63,9 +63,7 @@ export default function Header() {
 							className="shrink-0 md:hidden"
 						>
 							<Menu className="h-5 w-5" />
-							<span className="sr-only">
-								Toggle navigation menu
-							</span>
+							<span className="sr-only">Toggle navigation menu</span>
 						</Button>
 					</SheetTrigger>
 					<SheetContent side="top">
